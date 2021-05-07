@@ -67,14 +67,14 @@ void test_3DES_CBC_PKCS5() {
                                out);
 
     //hex data
-    int len = strlen(out);
+    int len = buffer_length;//strlen(out);
     LOGD("=======result  hex  ,length =%d \n", len);
     hexdump(reinterpret_cast<unsigned char *>(out), len + 1);
     LOGD(" \n");
 
     //base64
     unsigned char *buf = NULL;
-    buf = base64_encode(reinterpret_cast<unsigned char *>(out));
+    buf = base64_encode(reinterpret_cast<unsigned char *>(out) ,buffer_length);
     LOGD("base64 =%s ", buf);
     free(buf);
 }

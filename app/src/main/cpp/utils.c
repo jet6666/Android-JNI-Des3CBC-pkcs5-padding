@@ -7,7 +7,7 @@
 #include "stdlib.h"
 
 
-unsigned char *base64_encode(unsigned char *str) {
+unsigned char *base64_encode(unsigned char *str ,int len2) {
     long len;
     long str_len;
     unsigned char *res;
@@ -15,7 +15,7 @@ unsigned char *base64_encode(unsigned char *str) {
 //定义base64编码表
     unsigned char *base64_table = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 //计算经过base64编码后的字符串长度
-    str_len = strlen(str);
+    str_len = len2;//strlen(str);
     if (str_len % 3 == 0)
         len = str_len / 3 * 4;
     else

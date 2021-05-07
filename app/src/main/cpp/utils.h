@@ -8,7 +8,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-unsigned char *base64_encode(unsigned char *str);
+unsigned char *base64_encode(unsigned char *str ,int len2);
 void hexdump(unsigned char *buf, int num);
 #ifdef __cplusplus
 }
