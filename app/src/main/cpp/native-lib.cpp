@@ -41,14 +41,12 @@ char *padding_with_length(const char *src, int src_length) {
 
 
 //
-void test_3DES_CBC_PKCS5() {
+void test_3DES_CBC_PKCS5(unsigned char *out2) {
     const char buffer[] = "this is a 3des-cbd-PKCS#5 example2222";
-//    LOGD("plain  text  = %s ,length = %d \n", buffer, strlen(buffer));
 //    hexdump((unsigned char *) buffer, strlen(buffer) + 1 ) ;
-    //after  PKCS#5 padding
+    //   PKCS#5 padding
     char *buffer2 = padding_with_length(buffer, strlen(buffer));
     //hexdump(reinterpret_cast<unsigned char *>(buffer2), strlen(buffer2) + 1);
-    //LOGD("stop ======\n") ;
     int buffer_length = strlen(buffer2);
     //iv = thisthat
     char iv[] = {0X74, 0X68, 0X69, 0X73, 0X74, 0X68, 0X61, 0X74};
@@ -66,28 +64,24 @@ void test_3DES_CBC_PKCS5() {
                                buffer_length,
                                out);
 
+    //free  buffer2
+    free(buffer2);
     //hex data
-    int len = buffer_length;//strlen(out);
-    LOGD("=======result  hex  ,length =%d \n", len);
-    hexdump(reinterpret_cast<unsigned char *>(out), len + 1);
+    hexdump(reinterpret_cast<unsigned char *>(out), buffer_length + 1);
     LOGD(" \n");
-
     //base64
-    unsigned char *buf = NULL;
-    buf = base64_encode(reinterpret_cast<unsigned char *>(out) ,buffer_length);
-    LOGD("base64 =%s ", buf);
-    free(buf);
+    base64_encode(reinterpret_cast<unsigned char *>(out), buffer_length, out2);
+    LOGD("base64 =%s ", out2);
 }
 
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_example_test_1des_1ede3_1cbc_MainActivity_stringFromJNI(
         JNIEnv *env,
         jobject /* this */) {
-    std::string hello2 = "Hello from C++";
+    std::string hello2 = "Hello from C++";//hello2.c_str()
 
-
-    test_3DES_CBC_PKCS5();
-
-    return env->NewStringUTF(hello2.c_str());
+    unsigned char ret2[1024] = {0x0};
+    test_3DES_CBC_PKCS5(ret2);
+    return env->NewStringUTF(reinterpret_cast<const char *>(ret2));
 }
 
