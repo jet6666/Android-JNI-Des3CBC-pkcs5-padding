@@ -58,7 +58,7 @@ void test_3DES_CBC_PKCS5(unsigned char *out2) {
 //    printf("key  = %s \n", iv);
 
     char out[1024] = {0};
-    memset(out, 0x0, sizeof(out));
+    out[buffer_length] = '\0';
     tripleKeyDES_CBCEncryption(buffer2, key,
                                key2, key3, iv,
                                buffer_length,
@@ -80,8 +80,8 @@ Java_com_example_test_1des_1ede3_1cbc_MainActivity_stringFromJNI(
         jobject /* this */) {
     std::string hello2 = "Hello from C++";//hello2.c_str()
 
-    unsigned char ret2[1024] = {0x0};
-    test_3DES_CBC_PKCS5(ret2);
-    return env->NewStringUTF(reinterpret_cast<const char *>(ret2));
+    unsigned char ret[1024] = {0x0};
+    test_3DES_CBC_PKCS5(ret);
+    return env->NewStringUTF(reinterpret_cast<const char *>(ret));
 }
 
